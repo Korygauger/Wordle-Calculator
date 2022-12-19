@@ -16,17 +16,11 @@ class WordGraph
     map<char, vector<string>> fourth;
     map<char, vector<string>> fifth;
 
-    struct word
-    {
-        string word;
-        bool firstReached;
-    };
-
 public:
     WordGraph();
 
     void insertWord(string word);
-    set<string> retrieveWords(string positivePos, set<char> posChar, set<char> negChar, vector<string> negPos);
+    set<string> retrieveWords(map<char,vector<int>> goodLetters, set<char> badLetters);
 
 };
 
@@ -70,27 +64,11 @@ void WordGraph::insertWord(string word)
     fifth[word[4]].push_back(word);
 }
 
-set<string> WordGraph::retrieveWords(string positivePos, set<char> posChar, set<char> negChar, vector<string> negPos)
+set<string> WordGraph::retrieveWords(map<char,vector<int>> goodLetters, set<char> badLetters)
 {
     set<string> possibleWords;
 
-    //these don't work together need to work on this added a struct that may help
-
-    // for (int i = 0; i < First[positivePos[0]].size(); i++)
-    //     possibleWords.insert(First[positivePos[0]][i]);
-
-    // for (int i = 0; i < second[positivePos[1]].size(); i++)
-    //     possibleWords.insert(second[positivePos[1]][i]);
-
-    // for (int i = 0; i < third[positivePos[2]].size(); i++)
-    //     possibleWords.insert(third[positivePos[2]][i]);
-
-    // for (int i = 0; i < fourth[positivePos[3]].size(); i++)
-    //     possibleWords.insert(fourth[positivePos[3]][i]);
-
-    // for (int i = 0; i < fifth[positivePos[4]].size(); i++)
-    //     possibleWords.insert(fifth[positivePos[4]][i]);
-
+    
 
     return possibleWords; 
 }

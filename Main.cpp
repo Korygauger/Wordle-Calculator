@@ -12,27 +12,12 @@ using namespace std;
 int main()
 {
     WordGraph words;
-    set<char> posChar;
-    set<char> negChar;
-    string positivePos;
-    vector<string> negPos;
 
-    cout << "Enter the known correct characters" << endl;
-    cout << "Type 0 to exit and continue" << endl;
+    map<char,vector<int>> goodLetters;
+    set<char> badLetters;
 
-    while (true)
-    {
-        char letter;
-        cin >> letter;
-
-        if (letter == '0')
-            break;
-
-        posChar.insert(letter);
-    }
-
-    cout << "Enter the known incorrect characters" << endl;
-    cout << "Type 0 to exit and continue" << endl;
+    cout << "Enter any good letters" << endl;
+    cout << "0 to Exit and Continue" << endl;
 
     while (true)
     {
@@ -42,39 +27,38 @@ int main()
         if (letter == '0')
             break;
 
-        negChar.insert(letter);
+        cout << "Enter its possible positions 01234" << endl;
+        cout << "Enter 5 to continue" << endl;
+        while (true)
+        {
+            int position;
+            cin >> position;
+
+            if (position == 5)
+                break;
+
+            goodLetters[letter].push_back(position);
+        }
+
+        cout << "Enter more? 0 to exit" << endl;
     }
 
-    cout << "Enter the Positive Positions as a word" << endl;
-    cout << "Ex: if a is in the first position enter a----" << endl;
-    cout << "Type to exit and continue" << endl;
+    cout << "Enter any bad letters" << endl;
+    cout << "0 to Exit and Continue" << endl;
 
-    cin >> positivePos;
-
-    int count = 0;
-
-    for (int i = 0; i < positivePos.length(); i++)
+    while (true)
     {
-        if (positivePos[i] == '-')
-            count++;
+        char letter;
+        cin >> letter;
+
+        if (letter == '0')
+            break;
+
+        badLetters.insert(letter);
+
     }
 
-    cout << "Enter the Negative Positions" << endl;
-
-    for (count; count > 0; count--)
-    {
-        string negWord;
-        cin >> negWord;
-
-        negPos.push_back(negWord);
-    }
-
-    set<string> PossibleWords = words.retrieveWords(positivePos, posChar, negChar, negPos);
-
-    for (auto itr = PossibleWords.begin(); itr != PossibleWords.end(); itr++)
-    {
-        cout << *itr << ", ";
-    }
     
+
     return 0;
 }
