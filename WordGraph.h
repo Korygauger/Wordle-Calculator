@@ -16,6 +16,12 @@ class WordGraph
     map<char, vector<string>> fourth;
     map<char, vector<string>> fifth;
 
+    struct word
+    {
+        string word;
+        bool firstReached;
+    };
+
 public:
     WordGraph();
 
@@ -34,7 +40,7 @@ WordGraph::WordGraph()
         while(file)
         {
             file >> word;
-            cout << word << endl;
+            //cout << word << endl;
             insertWord(word);
 
         }
@@ -68,20 +74,23 @@ set<string> WordGraph::retrieveWords(string positivePos, set<char> posChar, set<
 {
     set<string> possibleWords;
 
-    for (int i = 0; i < First[positivePos[0]].size(); i++)
-        possibleWords.insert(First[positivePos[0]][i]);
+    //these don't work together need to work on this added a struct that may help
 
-    for (int i = 0; i < second[positivePos[1]].size(); i++)
-        possibleWords.insert(second[positivePos[1]][i]);
+    // for (int i = 0; i < First[positivePos[0]].size(); i++)
+    //     possibleWords.insert(First[positivePos[0]][i]);
 
-    for (int i = 0; i < third[positivePos[2]].size(); i++)
-        possibleWords.insert(third[positivePos[2]][i]);
+    // for (int i = 0; i < second[positivePos[1]].size(); i++)
+    //     possibleWords.insert(second[positivePos[1]][i]);
 
-    for (int i = 0; i < fourth[positivePos[3]].size(); i++)
-        possibleWords.insert(fourth[positivePos[3]][i]);
+    // for (int i = 0; i < third[positivePos[2]].size(); i++)
+    //     possibleWords.insert(third[positivePos[2]][i]);
 
-    for (int i = 0; i < fifth[positivePos[4]].size(); i++)
-        possibleWords.insert(fifth[positivePos[4]][i]);
+    // for (int i = 0; i < fourth[positivePos[3]].size(); i++)
+    //     possibleWords.insert(fourth[positivePos[3]][i]);
 
-    
+    // for (int i = 0; i < fifth[positivePos[4]].size(); i++)
+    //     possibleWords.insert(fifth[positivePos[4]][i]);
+
+
+    return possibleWords; 
 }
