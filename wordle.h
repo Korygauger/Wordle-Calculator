@@ -48,7 +48,13 @@ void wordle::print()
     cout << "Good Letters" << endl;
     for (int i = 0; i < 5; i++)
     {
-        cout << goodLetters[i] << " " << greenPos[i] << endl;
+        cout << goodLetters[i] << " ";
+        
+        if (greenPos[i])
+            cout << "Green"; 
+        
+        cout << endl;
+
     }
 
     cout << "Bad Letters" << endl;

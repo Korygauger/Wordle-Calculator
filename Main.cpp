@@ -92,6 +92,7 @@ int main()
     }
 
     currWordle.print();
+    
     words.retrieveWords(currWordle);
 
 
