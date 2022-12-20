@@ -5,6 +5,7 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include "wordle.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ public:
     WordGraph();
 
     void insertWord(string word);
-    set<string> retrieveWords(map<char,vector<int>> goodLetters, set<char> badLetters);
+    set<string> retrieveWords(wordle wordly);
 
 };
 
@@ -64,9 +65,11 @@ void WordGraph::insertWord(string word)
     fifth[word[4]].push_back(word);
 }
 
-set<string> WordGraph::retrieveWords(map<char,vector<int>> goodLetters, set<char> badLetters)
+set<string> WordGraph::retrieveWords(wordle wordly)
 {
     set<string> possibleWords;
+    set<string> holdover;
+
 
     
 

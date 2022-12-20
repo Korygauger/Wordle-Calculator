@@ -4,6 +4,7 @@
 #include <map>
 #include <iostream>
 #include "WordGraph.h"
+#include "Wordle.h"
 
 using namespace std;
 
@@ -12,39 +13,71 @@ using namespace std;
 int main()
 {
     WordGraph words;
+    wordle currWordle;
 
-    map<char,vector<int>> goodLetters;
-    set<char> badLetters;
-
-    cout << "Enter any good letters" << endl;
-    cout << "0 to Exit and Continue" << endl;
+    bool green = true;
+    bool yellow = false;
 
     while (true)
-    {
+    {      
         char letter;
+        int pos;
+
+        if (green)
+            cout << "Enter in a green letter (0 to Continue)" << endl;
+          
+        if (yellow)
+            cout << "Enter a Yellow letter (0 to Continue)" << endl;
+
         cin >> letter;
 
-        if (letter == '0')
+        if (letter == '0' && !green)
             break;
 
-        cout << "Enter its possible positions 01234" << endl;
-        cout << "Enter 5 to continue" << endl;
-        while (true)
+        if (letter == '0')
         {
-            int position;
-            cin >> position;
-
-            if (position == 5)
-                break;
-
-            goodLetters[letter].push_back(position);
+            green = false;
+            yellow = true;
         }
 
-        cout << "Enter more? 0 to exit" << endl;
+        if (green)
+        {
+
+            cout << "Enter its position 12345" << endl;
+
+            cin >> pos;
+
+            if (pos < 5 && pos > 0)
+                currWordle.insertGreen(letter, pos - 1);
+
+            else 
+                cout << "invalid position" << endl;
+
+        }
+
+        else
+        {
+            vector<int> poss;
+
+            cout << "Enter its possible positions 12345" << endl << "Enter 0 to Continue" << endl;
+
+            while (true)
+            {
+            
+                cin >> pos;
+
+                if (pos == 0)
+                    break;
+
+                poss.push_back(pos - 1);
+            }
+            
+            currWordle.insertYellow(letter, poss);
+        }
     }
 
     cout << "Enter any bad letters" << endl;
-    cout << "0 to Exit and Continue" << endl;
+    cout << "0 to Continue" << endl;
 
     while (true)
     {
@@ -54,11 +87,14 @@ int main()
         if (letter == '0')
             break;
 
-        badLetters.insert(letter);
+        currWordle.insertGrey(letter);
 
     }
 
-    
+    currWordle.print();
+    words.retrieveWords(currWordle);
+
+
 
     return 0;
 }
