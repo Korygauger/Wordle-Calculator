@@ -172,5 +172,8 @@ int main()
         cout << *itr << ", ";
     }
 
+    cout << endl << "press any button to exit";
+    cin >> selection;
+
     return 0;
 }
