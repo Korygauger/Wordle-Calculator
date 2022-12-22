@@ -29,6 +29,7 @@ void wordle::insertGreen(char letter, int pos)
 
 void wordle::insertYellow(char letter, vector<int> pos)
 {
+    int size = pos.size();
     for (int i = 0; i < pos.size(); i++)
     {
         if (greenPos[i])
