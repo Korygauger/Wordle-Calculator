@@ -8,9 +8,11 @@ using namespace std;
 
 struct wordle
 {
-    bool greenPos [5] = {false, false, false, false, false};
-    string goodLetters[5] = {"", "", "", "", ""};
+    pair<bool, char> greenLetters [5];
+    map<char,vector<int>> yellowLetters;
     set<char> badLetters;
+
+    wordle();
 
     void insertGreen(char letter, int pos);
     void insertYellow(char letter, vector<int> pos);
@@ -20,23 +22,22 @@ struct wordle
 
 };
 
+wordle::wordle()
+{
+    for (int i = 0; i < 5; i++)
+    {
+        greenLetters[i] = make_pair(false, '0');
+    }
+}
+
 void wordle::insertGreen(char letter, int pos)
 {
-    greenPos[pos] = true;
-
-    goodLetters[pos] = letter;
+    greenLetters[pos] = make_pair(true, letter);
 }
 
 void wordle::insertYellow(char letter, vector<int> pos)
 {
-    int size = pos.size();
-    for (int i = 0; i < pos.size(); i++)
-    {
-        if (greenPos[i])
-            continue;
-        
-        goodLetters[pos[i]] += letter;
-    }
+    yellowLetters[letter] = pos;
 }
 
 void wordle::insertGrey(char letter)
@@ -46,19 +47,27 @@ void wordle::insertGrey(char letter)
 
 void wordle::print()
 {
-    cout << "Good Letters" << endl;
+    cout << endl << "Green Letters" << endl;
+    cout << "=============" << endl;
     for (int i = 0; i < 5; i++)
     {
-        cout << goodLetters[i] << " ";
-        
-        if (greenPos[i])
-            cout << "Green"; 
-        
-        cout << endl;
-
+        cout << greenLetters[i].second << " " << i << endl;
     }
 
-    cout << "Bad Letters" << endl;
+    cout << endl << "Yellow Letters" << endl;
+    cout << "==============" << endl;
+    for (auto itr = yellowLetters.begin(); itr != yellowLetters.end(); itr++)
+    {
+        cout << itr->first << " ";
+        for (int i = 0; i < itr->second.size(); i++)
+        {
+            cout << itr->second[i] << ", ";
+        }
+        cout << endl;
+    }
+
+    cout << endl << "Bad Letters" << endl;
+    cout << "===========" << endl;
     for (auto itr = badLetters.begin(); itr != badLetters.end(); itr++)
     {
         cout << *itr << ", ";

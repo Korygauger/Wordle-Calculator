@@ -72,63 +72,68 @@ void WordGraph::insertWord(string word)
 set<string> WordGraph::retrieveWords(wordle wordly)
 {
     set<string> possibleWords;
+    set<string> yelloWords;
     set<string> hold;
 
     bool firstIter = true;
 
     for (int i = 0; i < 5; i++)
     {
-        if (wordly.goodLetters[i].length() == 0)
+        if (!wordly.greenLetters[i].first)
             continue;
 
-        if (wordly.greenPos[i])
+        if (firstIter)
         {
-            if (firstIter)
-            {
-                possibleWords = loadWords(wordly.goodLetters[i][0], i);
-                firstIter = false;
-            }
-
-            else
-            {
-                hold = loadWords(wordly.goodLetters[i][0], i);
-                possibleWords = setIntersect(possibleWords, hold);
-            }
+            possibleWords = loadWords(wordly.greenLetters[i].second, i);
+            firstIter = false;
         }
 
-        // this needs to be adjusted to make sure all words have all yellow letters in them cuz thats not happening now
         else
-        {            
-            if (firstIter)
-            {
-                possibleWords = loadWords(wordly.goodLetters[i][0], i);
-                
-                for (int j = 1; j < wordly.goodLetters[i].length(); j++)
-                {
-                    hold = loadWords(wordly.goodLetters[i][j], i);
-                    possibleWords.insert(hold.begin(), hold.end());
-                }
-
-                firstIter = false;
-            }
-
-            else
-            {
-                for (int j = 0; j < wordly.goodLetters[i].length(); j++)
-                {
-                    hold = loadWords(wordly.goodLetters[i][j], i);
-                    possibleWords.insert(hold.begin(), hold.end());
-                }
-            }
+        {
+            hold = loadWords(wordly.greenLetters[i].second, i);
+            possibleWords = setIntersect(possibleWords, hold);
         }
+        
+
     }
+
+    // at this point all words with green letters in the right places will be in possible words
+
+    firstIter = true;
+    for (auto itr = wordly.yellowLetters.begin(); itr != wordly.yellowLetters.end(); itr++)
+    {
+        // put new yellow letter loader here
+        if (firstIter)
+        {
+            for (int i = 0; i < itr->second.size(); i++)
+            {
+                hold = loadWords(itr->first, itr->second[i]);
+                yelloWords.insert(hold.begin(), hold.end());
+            }
+
+            firstIter = false;
+        }
+
+        else
+        {
+            set<string> holdover;
+            for (int i = 0; i < itr->second.size(); i++)
+            {
+                holdover = loadWords(itr->first, itr->second[i]);
+                hold.insert(holdover.begin(),holdover.end());
+            }
+            yelloWords = setIntersect(yelloWords, hold);
+        }
+    } 
+
+    possibleWords = setIntersect(yelloWords, possibleWords);
 
     set<string> wrongWords;
     for (auto itr = wordly.badLetters.begin(); itr != wordly.badLetters.end(); itr++)
     {
         for (int i = 0; i < 5; i++)
         {
-            if (wordly.greenPos[i])
+            if (wordly.greenLetters[i].first)
                 continue;
 
             hold = loadWords(*itr, i);

@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <iostream>
+#include <stdlib.h>
 #include "WordGraph.h"
 #include "Wordle.h"
 
@@ -171,9 +172,10 @@ int main()
     {
         cout << *itr << ", ";
     }
+    
+    cout << endl;
 
-    cout << endl << "press any button to exit";
-    cin >> selection;
+    system("PAUSE");
 
     return 0;
 }
