@@ -126,7 +126,17 @@ set<string> WordGraph::retrieveWords(wordle wordly)
         }
     } 
 
-    possibleWords = setIntersect(yelloWords, possibleWords);
+    if (!yelloWords.empty() && !possibleWords.empty())
+        possibleWords = setIntersect(yelloWords, possibleWords);
+
+    else if (possibleWords.empty() && !yelloWords.empty())
+        possibleWords.insert(yelloWords.begin(), yelloWords.end());
+    
+    else if (possibleWords.empty() && yelloWords.empty())
+    {
+        // load all words into possible words here
+    }
+
 
     set<string> wrongWords;
     for (auto itr = wordly.badLetters.begin(); itr != wordly.badLetters.end(); itr++)
